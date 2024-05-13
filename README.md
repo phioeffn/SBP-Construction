@@ -19,6 +19,9 @@ The main parts for testing are:
 The operator construction is defined in **LFSBcon.jl** and **LFSBcon2.jl**. 
 
 
+![Schrödinger equation](HarmonicOsziPoly.gif)
+
+
 ## Disclaimer for the code
 
 Everything is provided as-is and without warranty. Use at your own risk!
