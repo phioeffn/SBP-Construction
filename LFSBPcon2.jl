@@ -1,3 +1,5 @@
+#### Lastest change: 13.5.2024 by P. Öffner 
+
 include("LFSBcon.jl")
 using Optim
 #using Enzyme
@@ -42,7 +44,7 @@ function MakeBFSBPOpti(Op)
         B[end, end] = 1.0
         R = B*V/2
 	mu = (Op.xR - Op.xL)
-        #mu = 1   #If we set something not the the length.
+        #mu = 1   #If we set something not the the length. Have to included if we do not requ9re the data..
 
         Tm = zeros(Op.N, Op.N) # A "Template" matrix storing the non-zero elements allowed in S
         for k=1:Op.N
@@ -58,14 +60,15 @@ function MakeBFSBPOpti(Op)
 	function f(s, p)
 		# Projection onto Diagonal quadrature
 	     	w = mu*softmax(p) # The version where we include that quadrature is exact for constants
-                # w = mu*softmax_2(p) # Version where we are not exact for constants
+                # w = mu*softmax_2(p) # Version where we are not exact for constants! Have to be included if we like to test them. 
                 # w = exp.(p)
                 # Skew symmetrie
                 S = (Tm.*s - transpose(Tm.*s)) / 2.0
 		return norm(S*V - diagm(w)*dV + R)^2
 	end
 
-        #fsl(s, p) = norm((Tm.*s- transpose(Tm.*s))/2.0*V - diagm(mu*softmax_2(p))*dV + R)^2 # andere Formel 
+        #fsl(s, p) = norm((Tm.*s- transpose(Tm.*s))/2.0*V - diagm(mu*softmax_2(p))*dV + R)^2 # andere Formel //  Version where we are not exact for constants
+                # w = exp.(p)
 	fsl(s, p) = norm((Tm.*s- transpose(Tm.*s))/2.0*V - diagm(mu*softmax(p))*dV + R)^2 # The version where we include that quadrature is exact for constants
         
   
@@ -74,12 +77,9 @@ function MakeBFSBPOpti(Op)
 	x = hcat(s, p)
 	fg = fsv'
 
-	#res = optimize(fsv, fg, x, GradientDescent(), Optim.Options(g_tol=1.0E-16, iterations=10000); inplace = false)
-	#print(res)
+
         res = optimize(fsv, fg, x, LBFGS(), Optim.Options(g_tol=1.0E-16, iterations=50000); inplace = false)
-	#res = optimize(fsv, fg, x, ConjugateGradient(), Optim.Options(g_tol=1.0E-16, iterations=30000); inplace = false)
         print(res)
-	#	return res, fsv, fsl, fres
 	Y = res.minimizer
 	S, P = Y[:, 1:end-1], diagm(mu*softmax(Y[:, end]))
         #S, P = Y[:, 1:end-1], diagm(softmax_2(Y[:, end])) # Version not exact for constants not working, or maybe
