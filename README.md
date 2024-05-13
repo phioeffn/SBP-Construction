@@ -8,13 +8,15 @@ by Jan Glaubitz, Jan Nordström and Philipp Öffner.
 
 You find the code to produce function space SBP operators via an optization procedure and to reproduce the results 
 from the paper. The code has several parts. 
-The main parts are: 
+The main parts for testing are: 
 
-SchrPics.jl (Test case for the Schrödinger equation) 
+**SchrPics.jl** (Test case for the Schrödinger equation) 
 
-Convana.jl (For the convergence tests where the operators have to be adapted in bandedpoly.jl)
+**Convana.jl** (For the convergence tests where the operators have to be adapted in bandedpoly.jl)
 
-Bandedpoly.jl (Can be used to construct the operators as well as optest.jl.)
+**Bandedpoly.jl** (Can be used to construct the operators as well as optest.jl.)
+
+The operator construction is defined in **LFSBcon.jl** and **LFSBcon2.jl**. 
 
 
 ## Disclaimer for the code
