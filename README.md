@@ -1,4 +1,4 @@
-# Optimization-based construction procedure for function space SBP Operators
+# Optimization-based construction procedure for function space SBP operators
 
 This is the public repository refering to the article 
 
