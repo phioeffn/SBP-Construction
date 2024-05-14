@@ -6,7 +6,7 @@ This is the public repository refering to the article
 
 by Jan Glaubitz, Jan Nordström and Philipp Öffner. 
 
-You find the code to produce function space SBP operators via an optization procedure and to reproduce the results 
+You find the code to produce function space SBP operators via an optimization procedure and to reproduce the results 
 from the paper. The code has several parts. 
 The main parts for testing are: 
 
